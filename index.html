@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fahiz | fsociety</title>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-color: #050505;
+      --text-main: #e0e0e0;
+      --mr-red: #e60000;
+      --mr-red-glow: rgba(230, 0, 0, 0.4);
+      --font-mono: 'Share Tech Mono', monospace;
+      --font-heading: 'Space Grotesk', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      font-family: var(--font-mono);
+      overflow-x: hidden;
+      position: relative;
+      min-height: 100vh;
+    }
+
+    /* CRT Scanlines Overlay */
+    body::before {
+      content: " ";
+      display: block;
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+      z-index: 999;
+      background-size: 100% 2px, 3px 100%;
+      pointer-events: none;
+    }
+
+    /* Navbar */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 30px 5vw;
+      border-bottom: 1px solid rgba(230, 0, 0, 0.2);
+      background: rgba(5, 5, 5, 0.8);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      font-family: var(--font-heading);
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--text-main);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      position: relative;
+    }
+
+    .logo::after {
+      content: "_";
+      animation: blink 1s step-end infinite;
+      color: var(--mr-red);
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    nav {
+      display: flex;
+      gap: 30px;
+    }
+
+    nav a {
+      color: var(--text-main);
+      text-decoration: none;
+      font-size: 1.1rem;
+      text-transform: lowercase;
+      transition: color 0.3s, text-shadow 0.3s;
+      position: relative;
+    }
+
+    nav a:hover {
+      color: var(--mr-red);
+      text-shadow: 0 0 8px var(--mr-red-glow);
+    }
+
+    .cv-btn {
+      background: transparent;
+      color: var(--mr-red);
+      border: 1px solid var(--mr-red);
+      padding: 10px 20px;
+      font-family: var(--font-mono);
+      font-size: 1rem;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cv-btn:hover {
+      background: var(--mr-red);
+      color: var(--bg-color);
+      box-shadow: 0 0 15px var(--mr-red-glow);
+    }
+
+    /* Hero Layout */
+    .hero {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 100px 5vw;
+      min-height: calc(100vh - 100px);
+      position: relative;
+    }
+
+    .hero-content {
+      max-width: 600px;
+      z-index: 2;
+    }
+
+    .title {
+      font-family: var(--font-heading);
+      font-size: 4rem;
+      line-height: 1.1;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+    }
+
+    /* Glitch effect for name */
+    .glitch {
+      color: var(--mr-red);
+      position: relative;
+      display: inline-block;
+    }
+
+    .glitch::before, .glitch::after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--bg-color);
+    }
+
+    .glitch::before {
+      left: 2px;
+      text-shadow: -2px 0 #0ff;
+      clip: rect(24px, 550px, 90px, 0);
+      animation: glitch-anim-2 3s infinite linear alternate-reverse;
+    }
+
+    .glitch::after {
+      left: -2px;
+      text-shadow: -2px 0 #f00;
+      clip: rect(85px, 550px, 140px, 0);
+      animation: glitch-anim 2.5s infinite linear alternate-reverse;
+    }
+
+    @keyframes glitch-anim {
+      0% { clip: rect(10px, 9999px, 86px, 0); }
+      20% { clip: rect(54px, 9999px, 13px, 0); }
+      40% { clip: rect(62px, 9999px, 98px, 0); }
+      60% { clip: rect(12px, 9999px, 8px, 0); }
+      80% { clip: rect(81px, 9999px, 49px, 0); }
+      100% { clip: rect(33px, 9999px, 12px, 0); }
+    }
+    @keyframes glitch-anim-2 {
+      0% { clip: rect(65px, 9999px, 100px, 0); }
+      20% { clip: rect(3px, 9999px, 5px, 0); }
+      40% { clip: rect(14px, 9999px, 66px, 0); }
+      60% { clip: rect(96px, 9999px, 32px, 0); }
+      80% { clip: rect(18px, 9999px, 84px, 0); }
+      100% { clip: rect(59px, 9999px, 44px, 0); }
+    }
+
+    .subtitle {
+      font-size: 1.5rem;
+      color: #888;
+      margin-bottom: 40px;
+      border-right: 2px solid var(--mr-red);
+      white-space: nowrap;
+      overflow: hidden;
+      animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
+      display: inline-block;
+    }
+
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+    @keyframes blink-caret {
+      from, to { border-color: transparent }
+      50% { border-color: var(--mr-red); }
+    }
+
+    .btn {
+      background: var(--mr-red);
+      color: #000;
+      padding: 15px 35px;
+      font-size: 1.1rem;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      text-transform: uppercase;
+      border: none;
+      cursor: pointer;
+      position: relative;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px var(--mr-red-glow);
+    }
+
+    .exp {
+      margin-top: 30px;
+      font-size: 1rem;
+      color: #666;
+      letter-spacing: 1px;
+    }
+
+    /* 3D Image Section */
+    .hero-visuals {
+      position: absolute;
+      left: 50%;
+      top: 55%;
+      transform: translate(-50%, -50%);
+      perspective: 1200px;
+      width: 600px;
+      height: 600px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 5;
+    }
+
+    /* Spotlight Illumination */
+    .hero-visuals::after {
+      content: ""; 
+      position: absolute; 
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: radial-gradient(circle 180px at var(--x, 50%) var(--y, 50%), transparent 0%, rgba(5,5,5,0.95) 100%);
+      z-index: 10; 
+      pointer-events: none;
+      transition: background 0.1s ease;
+    }
+
+    .image-wrapper {
+      position: relative;
+      width: 320px;
+      height: 320px;
+      transform-style: preserve-3d;
+      transition: transform 0.1s ease-out; /* changed to 0.1s for smoother javascript follow */
+    }
+
+    .image-wrapper.animated-float {
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .image {
+      width: 140%; /* Very large to pop out */
+      height: 140%;
+      object-fit: contain;
+      border: none;
+      box-shadow: none;
+      filter: contrast(1.1) brightness(1.1); /* Enhance lighting */
+      mix-blend-mode: screen; /* Pure black background becomes perfectly transparent */
+      transition: transform 0.3s ease;
+      transform: translateZ(50px);
+    }
+
+    .hero-visuals:hover .image {
+      transform: translateZ(80px) scale(1.03);
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0px) rotateY(0) rotateX(0); }
+      50% { transform: translateY(-15px) rotateY(5deg) rotateX(2deg); }
+      100% { transform: translateY(0px) rotateY(0) rotateX(0); }
+    }
+
+    /* Floating Cards */
+    .card {
+      position: absolute;
+      bottom: 10%;
+      left: 5vw;
+      background: rgba(10, 10, 10, 0.85);
+      border: 1px solid rgba(230, 0, 0, 0.3);
+      padding: 20px 25px;
+      border-radius: 4px;
+      backdrop-filter: blur(5px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      transform-style: preserve-3d;
+      transition: transform 0.3s ease;
+      z-index: 10;
+    }
+
+    .card:hover {
+      transform: translateY(-5px) scale(1.02);
+      border-color: var(--mr-red);
+      box-shadow: 0 15px 40px var(--mr-red-glow);
+    }
+
+    .card p:first-child {
+      color: var(--mr-red);
+      font-size: 1.2rem;
+      margin-bottom: 5px;
+    }
+
+    .right-text {
+      position: absolute;
+      right: 5vw;
+      bottom: 20%;
+      color: #666;
+      text-align: right;
+      font-size: 0.9rem;
+      max-width: 250px;
+      line-height: 1.6;
+    }
+    .right-text::before {
+      content: "> ";
+      color: var(--mr-red);
+    }
+
+    /* Background code lines */
+    .bg-code {
+      position: absolute;
+      top: 15vh;
+      right: 15vw;
+      color: rgba(255, 255, 255, 0.03);
+      font-size: 0.85rem;
+      white-space: pre;
+      z-index: 0;
+      pointer-events: none;
+      user-select: none;
+    }
+    
+    /* Responsive */
+    @media (max-width: 900px) {
+      header {
+        flex-direction: column;
+        gap: 15px;
+        padding: 20px;
+        align-items: center;
+        width: 100%;
+      }
+      nav {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+      }
+      .title {
+        font-size: 2.8rem;
+      }
+      .glitch::before, .glitch::after {
+        display: none !important; /* Stop mobile glitch slicing */
+      }
+      .hero {
+        flex-direction: column;
+        text-align: center;
+        padding-top: 20px;
+        min-height: auto;
+      }
+      .hero-visuals {
+        position: relative;
+        left: auto;
+        top: auto;
+        transform: none;
+        width: 100%;
+        max-width: 300px;
+        height: 300px;
+        margin: 10px auto;
+      }
+      .hero-visuals::after {
+        display: none; /* Spotlight disabled on touch devices */
+      }
+      .image {
+        width: 100%;
+        height: 100%;
+        transform: none !important; /* Disable extreme 3D depth to prevent boundary zoom */
+      }
+      .bg-code {
+        display: none;
+      }
+      .right-text {
+        position: static;
+        text-align: center;
+        margin-top: 20px;
+        max-width: 100%;
+        margin-bottom: 30px;
+      }
+      .card {
+        position: relative;
+        left: 0;
+        bottom: 0;
+        margin-top: 20px;
+        display: inline-block;
+      }
+      .subtitle {
+        border-right: none;
+        animation: none;
+        white-space: normal;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Fahiz</div>
+  <nav>
+    <a href="#">/home</a>
+    <a href="#">/services</a>
+    <a href="#">/projects</a>
+    <a href="#">/contact</a>
+  </nav>
+  <button class="cv-btn" onclick="window.open('sample_cv.pdf', '_blank')">View cv</button>
+</header>
+
+<section class="hero">
+  
+  <div class="bg-code">
+root@fsociety:~# nmap -sS 192.168.1.1
+Starting Nmap 7.80 ( https://nmap.org )
+Nmap scan report for 192.168.1.1
+Host is up (0.0020s latency).
+Not shown: 998 closed ports
+PORT   STATE SERVICE
+22/tcp open  ssh
+80/tcp open  http
+  </div>
+
+  <div class="hero-content">
+    <h1 class="title">Hi, I'm <br><span class="glitch" data-text="Fahiz">Fahiz</span></h1>
+    <p class="subtitle">Aspiring cybersecurity learner</p>
+    <button class="btn">Execute Projects</button>
+    <p class="exp">[ 01_YEAR_EXPERIENCE ]</p>
+  </div>
+
+  <div class="hero-visuals">
+    <div class="image-wrapper animated-float" id="img-tilt">
+      <img src="avatar_3d.png" alt="Fahiz 3D Avatar" class="image">
+    </div>
+  </div>
+
+</section>
+
+<div class="card">
+  <p>★★★★★[4.9]</p>
+  <p>10K_SUCCESSFUL_BREACHES</p>
+</div>
+
+<div class="right-text">
+  I design secure systems,<br> and I uncover the truth.
+</div>
+
+<script>
+  // Dynamic 3D mouse move effect
+  const heroVisual = document.querySelector('.hero-visuals');
+  const imgTilt = document.getElementById('img-tilt');
+
+  heroVisual.addEventListener("mousemove", (e) => {
+    // Remove default float animation on hover so it doesn't conflict
+    imgTilt.classList.remove('animated-float');
+    
+    // Bounds of the container for perspective calculation
+    const rect = heroVisual.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+
+    const angleX = (y - centerY) / 10;
+    const angleY = (centerX - x) / 10;
+
+    imgTilt.style.transform = `rotateX(${angleX}deg) rotateY(${angleY}deg)`;
+
+    // Spotlight tracking
+    heroVisual.style.setProperty('--x', x + 'px');
+    heroVisual.style.setProperty('--y', y + 'px');
+  });
+
+  heroVisual.addEventListener("mouseleave", () => {
+    imgTilt.style.transform = `rotateX(0deg) rotateY(0deg)`;
+    imgTilt.classList.add('animated-float');
+  });
+
+  // Optional: Random glitching triggers via JS for extra effect
+  setInterval(() => {
+    const glitchElement = document.querySelector('.glitch');
+    if(Math.random() > 0.8) {
+      glitchElement.style.animation = 'none';
+      void glitchElement.offsetWidth; // trigger reflow
+      glitchElement.style.animation = null; 
+    }
+  }, 2000);
+</script>
+
+</body>
+</html>
