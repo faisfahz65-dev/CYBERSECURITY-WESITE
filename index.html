@@ -822,6 +822,69 @@
         border-right: none;
         animation: none;
         white-space: normal;
+        font-size: 1rem; /* Smaller subtitle on mobile */
+      }
+
+      /* Intel Panel Mobile Adaption */
+      .cyber-feed {
+        position: relative;
+        top: 0;
+        left: 0;
+        width: 100%;
+        margin-top: 40px;
+        transform: none !important;
+        box-shadow: none;
+      }
+
+      .hero-visuals {
+        margin-top: 20px;
+        height: 300px; /* Constrain height on small screens */
+      }
+
+      .image {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    /* Support for Touch Devices & Small Screens */
+    @media (hover: none), (max-width: 768px) {
+      .cursor, .cursor-follower {
+        display: none !important;
+      }
+
+      body {
+        cursor: auto !important;
+      }
+
+      * {
+        cursor: auto !important;
+      }
+
+      /* Disable complex 3D tilts that feel weird on touch */
+      .image-wrapper, .result-card, .contact-card, .card {
+        transform: none !important;
+        transition: transform 0.3s ease !important;
+      }
+      
+      .image-wrapper:hover, .result-card:hover, .contact-card:hover, .card:hover {
+        transform: translateY(-5px) !important; /* Simple lift instead of tilt */
+      }
+
+      /* Adjust section headings for mobile */
+      .section-heading {
+        font-size: 1.8rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .title {
+        font-size: 2.2rem;
+      }
+
+      .hero-content .btn {
+        width: 100%;
+        padding: 15px;
       }
     }
 
@@ -1325,17 +1388,39 @@
         const angleX = (y - centerY) / 20;
         const angleY = (centerX - x) / 20;
         imgTilt.style.transform = `rotateX(${angleX}deg) rotateY(${angleY}deg)`;
-      }
+    if (!isTouchDevice) { // Disable on touch devices
+      hero.addEventListener("mousemove", (e) => {
+        const rect = hero.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
 
-      // Spotlight tracking (CSS variable)
-      heroVisual.style.setProperty('--x', (e.clientX - heroVisual.getBoundingClientRect().left) + 'px');
-      heroVisual.style.setProperty('--y', (e.clientY - heroVisual.getBoundingClientRect().top) + 'px');
-    });
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
 
-    hero.addEventListener("mouseleave", () => {
-      heroContent.style.transform = `translate(0, 0)`;
-      if (imgTilt) imgTilt.style.transform = `rotateX(0deg) rotateY(0deg)`;
-    });
+        const moveX = (x - centerX) / 50;
+        const moveY = (y - centerY) / 50;
+
+        // Subtle parallax for content
+        heroContent.style.transform = `translate(${moveX}px, ${moveY}px)`;
+
+        // 3D Tilt for image
+        if (imgTilt) {
+          const angleX = (y - centerY) / 20;
+          const angleY = (centerX - x) / 20;
+          imgTilt.style.transform = `rotateX(${angleX}deg) rotateY(${angleY}deg)`;
+        }
+
+        // Spotlight tracking (CSS variable)
+        heroVisual.style.setProperty('--x', (e.clientX - heroVisual.getBoundingClientRect().left) + 'px');
+        heroVisual.style.setProperty('--y', (e.clientY - heroVisual.getBoundingClientRect().top) + 'px');
+      });
+
+      hero.addEventListener("mouseleave", () => {
+        heroContent.style.transform = `translate(0, 0)`;
+        if (imgTilt) imgTilt.style.transform = `rotateX(0deg) rotateY(0deg)`;
+      });
+    }
+
 
     // 5. Scroll Reveal Logic
     const revealElements = document.querySelectorAll('.reveal');
