@@ -822,7 +822,8 @@
         border-right: none;
         animation: none;
         white-space: normal;
-        font-size: 1rem; /* Smaller subtitle on mobile */
+        font-size: 1rem;
+        /* Smaller subtitle on mobile */
       }
 
       /* Intel Panel Mobile Adaption */
@@ -838,7 +839,8 @@
 
       .hero-visuals {
         margin-top: 20px;
-        height: 300px; /* Constrain height on small screens */
+        height: 300px;
+        /* Constrain height on small screens */
       }
 
       .image {
@@ -848,8 +850,11 @@
     }
 
     /* Support for Touch Devices & Small Screens */
-    @media (hover: none), (max-width: 768px) {
-      .cursor, .cursor-follower {
+    @media (hover: none),
+    (max-width: 768px) {
+
+      .cursor,
+      .cursor-follower {
         display: none !important;
       }
 
@@ -862,13 +867,20 @@
       }
 
       /* Disable complex 3D tilts that feel weird on touch */
-      .image-wrapper, .result-card, .contact-card, .card {
+      .image-wrapper,
+      .result-card,
+      .contact-card,
+      .card {
         transform: none !important;
         transition: transform 0.3s ease !important;
       }
-      
-      .image-wrapper:hover, .result-card:hover, .contact-card:hover, .card:hover {
-        transform: translateY(-5px) !important; /* Simple lift instead of tilt */
+
+      .image-wrapper:hover,
+      .result-card:hover,
+      .contact-card:hover,
+      .card:hover {
+        transform: translateY(-5px) !important;
+        /* Simple lift instead of tilt */
       }
 
       /* Adjust section headings for mobile */
@@ -1361,7 +1373,7 @@
         setTimeout(type, 100);
       }
     }
-    setTimeout(type, 2000); // Start after loader starts fading
+    setTimeout(type, 2000); // Start after loader
 
     // 4. Hero Parallax & Tilt
     const hero = document.querySelector('.hero');
@@ -1369,25 +1381,8 @@
     const heroVisual = document.querySelector('.hero-visuals');
     const imgTilt = document.getElementById('img-tilt');
 
-    hero.addEventListener("mousemove", (e) => {
-      const rect = hero.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
+    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
-      const centerX = rect.width / 2;
-      const centerY = rect.height / 2;
-
-      const moveX = (x - centerX) / 50;
-      const moveY = (y - centerY) / 50;
-
-      // Subtle parallax for content
-      heroContent.style.transform = `translate(${moveX}px, ${moveY}px)`;
-
-      // 3D Tilt for image
-      if (imgTilt) {
-        const angleX = (y - centerY) / 20;
-        const angleY = (centerX - x) / 20;
-        imgTilt.style.transform = `rotateX(${angleX}deg) rotateY(${angleY}deg)`;
     if (!isTouchDevice) { // Disable on touch devices
       hero.addEventListener("mousemove", (e) => {
         const rect = hero.getBoundingClientRect();
@@ -1421,7 +1416,6 @@
       });
     }
 
-
     // 5. Scroll Reveal Logic
     const revealElements = document.querySelectorAll('.reveal');
     const revealObserver = new IntersectionObserver((entries) => {
@@ -1450,6 +1444,7 @@
         }
       }, 3000);
     }
+    
     // 8. Advanced 3D Tilt for Cards
     const tiltCards = document.querySelectorAll('.result-card, .contact-card, .card, .project-card');
     tiltCards.forEach(card => {
@@ -1495,72 +1490,72 @@
     });
 
     // 10. Live Cyber Intel Panel Logic
-      const headlines = [
-        "⚠️ CRITICAL: OpenSSH 'RegreSSHion' vulnerability exploited in the wild",
-        "⚠️ ALERT: Major supply chain attack targets Python Package Index (PyPI)",
-        "⚠️ BREAKING: Microsoft identifies new Russian-linked hacking campaign",
-        "⚠️ INTEL: FBI disrupts world-wide 'Volt Typhoon' botnet infrastructure",
-        "⚠️ VULN: Zero-day bypass found in enterprise security gateways"
-      ];
+    const headlines = [
+      "⚠️ CRITICAL: OpenSSH 'RegreSSHion' vulnerability exploited in the wild",
+      "⚠️ ALERT: Major supply chain attack targets Python Package Index (PyPI)",
+      "⚠️ BREAKING: Microsoft identifies new Russian-linked hacking campaign",
+      "⚠️ INTEL: FBI disrupts world-wide 'Volt Typhoon' botnet infrastructure",
+      "⚠️ VULN: Zero-day bypass found in enterprise security gateways"
+    ];
 
-      const intelQuotes = [
-        "Security is not a product, but a process.",
-        "The quieter you become, the more you can hear.",
-        "Hackers exploit trust, not just systems.",
-        "Data is the new oil, and security is the engine.",
-        "In the digital world, invisibility is the best shield."
-      ];
+    const intelQuotes = [
+      "Security is not a product, but a process.",
+      "The quieter you become, the more you can hear.",
+      "Hackers exploit trust, not just systems.",
+      "Data is the new oil, and security is the engine.",
+      "In the digital world, invisibility is the best shield."
+    ];
 
-      const headlineEl = document.getElementById('intel-headline');
-      const quoteEl = document.getElementById('intel-quote');
-      const statusEl = document.getElementById('sys-status');
-      const threatEl = document.getElementById('threat-level');
+    const headlineEl = document.getElementById('intel-headline');
+    const quoteEl = document.getElementById('intel-quote');
+    const statusEl = document.getElementById('sys-status');
+    const threatEl = document.getElementById('threat-level');
 
-      let hIndex = 0;
-      let qIndex = 0;
+    let hIndex = 0;
+    let qIndex = 0;
 
-      function rotateIntel() {
-        // Rotate Headline
-        setInterval(() => {
-          headlineEl.classList.add('fade-out');
-          setTimeout(() => {
-            hIndex = (hIndex + 1) % headlines.length;
-            headlineEl.innerText = headlines[hIndex];
-            headlineEl.classList.remove('fade-out');
-          }, 500);
-        }, 4000);
+    function rotateIntel() {
+      // Rotate Headline
+      setInterval(() => {
+        headlineEl.classList.add('fade-out');
+        setTimeout(() => {
+          hIndex = (hIndex + 1) % headlines.length;
+          headlineEl.innerText = headlines[hIndex];
+          headlineEl.classList.remove('fade-out');
+        }, 500);
+      }, 4000);
 
-        // Rotate Quote
-        setInterval(() => {
-          quoteEl.classList.add('fade-out');
-          setTimeout(() => {
-            qIndex = (qIndex + 1) % intelQuotes.length;
-            quoteEl.innerText = `"${intelQuotes[qIndex]}"`;
-            quoteEl.classList.remove('fade-out');
-          }, 500);
-        }, 6000);
+      // Rotate Quote
+      setInterval(() => {
+        quoteEl.classList.add('fade-out');
+        setTimeout(() => {
+          qIndex = (qIndex + 1) % intelQuotes.length;
+          quoteEl.innerText = `"${intelQuotes[qIndex]}"`;
+          quoteEl.classList.remove('fade-out');
+        }, 500);
+      }, 6000);
 
-        // Randomize Status & Threat
-        const statuses = ["MONITORING", "ANALYZING", "SCANNING", "FILTERING"];
-        const levels = ["LOW", "MEDIUM", "HIGH", "CRITICAL"];
+      // Randomize Status & Threat
+      const statuses = ["MONITORING", "ANALYZING", "SCANNING", "FILTERING"];
+      const levels = ["LOW", "MEDIUM", "HIGH", "CRITICAL"];
 
-        setInterval(() => {
-          statusEl.innerText = statuses[Math.floor(Math.random() * statuses.length)];
-          threatEl.innerText = levels[Math.floor(Math.random() * levels.length)];
+      setInterval(() => {
+        statusEl.innerText = statuses[Math.floor(Math.random() * statuses.length)];
+        threatEl.innerText = levels[Math.floor(Math.random() * levels.length)];
 
-          // Color change for critical
-          if (threatEl.innerText === "CRITICAL") {
-            threatEl.style.color = "#ff0000";
-            threatEl.style.textShadow = "0 0 10px #ff0000";
-          } else {
-            threatEl.style.color = "var(--mr-red)";
-            threatEl.style.textShadow = "none";
-          }
-        }, 3000);
-      }
+        // Color change for critical
+        if (threatEl.innerText === "CRITICAL") {
+          threatEl.style.color = "#ff0000";
+          threatEl.style.textShadow = "0 0 10px #ff0000";
+        } else {
+          threatEl.style.color = "var(--mr-red)";
+          threatEl.style.textShadow = "none";
+        }
+      }, 3000);
+    }
 
-      rotateIntel();
-    </script>
+    rotateIntel();
+  </script>
 
 </body>
 
